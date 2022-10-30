@@ -1,5 +1,10 @@
 import styled, { keyframes } from 'styled-components';
 
+const Container = styled.div`
+  position: relative;
+  height: 200px;
+`;
+
 const SpinnerWrapper = styled.div`
   ${({ theme }) => theme.placeholder.absoluteCenter};
   width: 100px;
@@ -30,13 +35,15 @@ const SpinnerQuarter = styled.div`
 
 function Spinner() {
   return (
-    <SpinnerWrapper>
-      <SpinnerQuarter delay={-0.4} />
-      <SpinnerQuarter delay={-0.3} />
-      <SpinnerQuarter delay={-0.2} />
-      <SpinnerQuarter delay={-0.1} />
-      <SpinnerQuarter />
-    </SpinnerWrapper>
+    <Container>
+      <SpinnerWrapper>
+        <SpinnerQuarter delay={-0.4} />
+        <SpinnerQuarter delay={-0.3} />
+        <SpinnerQuarter delay={-0.2} />
+        <SpinnerQuarter delay={-0.1} />
+        <SpinnerQuarter />
+      </SpinnerWrapper>
+    </Container>
   );
 }
 
