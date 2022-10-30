@@ -4,6 +4,10 @@ import Header from './Header';
 
 const Container = styled.div`
   padding: 40px 24px;
+
+  @media ${({ theme }) => theme.media.mobile} {
+    padding: 20px 16px;
+  }
 `;
 
 const Section = styled.section`
