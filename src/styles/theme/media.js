@@ -1,7 +1,6 @@
 const media = {
-  desktop: 1280,
-  tablet: 767,
-  mobile: 475,
+  tablet: 'screen and (max-width: 768px)',
+  mobile: 'screen and (max-width: 480px)',
 };
 
 export default media;
