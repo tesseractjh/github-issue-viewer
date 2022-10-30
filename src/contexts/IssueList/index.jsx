@@ -7,7 +7,9 @@ const IssueListContext = React.createContext();
 const IssueListDispatchContext = React.createContext();
 
 function IssueListProvider({ children }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const [isLastPage, setIsLastPage] = useState(false);
   const [perPage, setPerPage] = useState(30);
   const [page, setPage] = useState(1);
   const [issueList, setIssueList] = useState([]);
@@ -15,11 +17,16 @@ function IssueListProvider({ children }) {
 
   const initList = useCallback(
     async ({ organization, repo }) => {
+      setIsLoading(true);
       setIsFetching(true);
       await getIssueList([organization, repo, perPage, page], {
         onSuccess: data => {
           setIssueList(data);
+          setIsLoading(false);
           setIsFetching(false);
+          if (!data.length) {
+            setIsLastPage(true);
+          }
         },
       });
     },
@@ -34,6 +41,9 @@ function IssueListProvider({ children }) {
           setPage(prev => prev + 1);
           setIssueList(prev => [...prev, ...data]);
           setIsFetching(false);
+          if (!data.length) {
+            setIsLastPage(true);
+          }
         },
       });
     },
@@ -46,12 +56,14 @@ function IssueListProvider({ children }) {
 
   const value = useMemo(
     () => ({
+      isLoading,
       isFetching,
+      isLastPage,
       perPage,
       page,
       issueList,
     }),
-    [isFetching, perPage, page, issueList]
+    [isLoading, isFetching, isLastPage, perPage, page, issueList]
   );
 
   const dispatch = useMemo(
